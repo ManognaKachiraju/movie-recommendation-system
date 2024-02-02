@@ -1,0 +1,25 @@
+pipeline{
+    agent any
+    stages
+    {
+        stage('Docker image build')
+        {
+            steps{
+                bat 'docker build -t manokac55/movie-recommendation-system .'
+            }
+        }
+        stage('Uploading to Dockerhub')
+        {
+            steps{
+                bat 'docker push manokac55/movie-recommendation-system '
+            }
+        }
+        stage('Minikube')
+
+        {
+            steps{
+                bat 'kubectl apply -f deployment.yaml'
+            }
+        }
+    }
+}
